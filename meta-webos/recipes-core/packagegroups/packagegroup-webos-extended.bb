@@ -1,4 +1,4 @@
-# Copyright (c) 2012-2018 LG Electronics, Inc.
+# Copyright (c) 2012-2019 LG Electronics, Inc.
 
 DESCRIPTION = "meta-webos components used in webOS OSE"
 LICENSE = "Apache-2.0"
@@ -150,6 +150,8 @@ WEBOS_FOSS_MISSING_FROM_RDEPENDS = " \
 # These packages that are installed in the qemux86 image only.
 RDEPENDS_${PN}_append_qemux86 = " \
     dhcp-client \
+    libegl-gallium \
+    libgbm-gallium \
 "
 
 RDEPENDS_${PN} += "${MACHINE_EXTRA_RDEPENDS}"

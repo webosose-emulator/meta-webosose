@@ -1,0 +1,65 @@
+From a5e733c6b52e93de3000647d075f5ca2f55fcb71 Mon Sep 17 00:00:00 2001
+From: Rob Clark <robdclark@gmail.com>
+Date: Wed, 26 Oct 2016 16:52:52 -0400
+Subject: [PATCH] mesa: drop current draw/read buffer when ctx is released
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+This fixes a problem seen with gallium drivers vs android wallpaper.
+Basically, what happens is:
+
+   EGLSurface tmpSurface = mEgl.eglCreatePbufferSurface(mEglDisplay, mEglConfig, attribs);
+   mEgl.eglMakeCurrent(mEglDisplay, tmpSurface, tmpSurface, mEglContext);
+
+   int[] maxSize = new int[1];
+   Rect frame = surfaceHolder.getSurfaceFrame();
+   glGetIntegerv(GL_MAX_TEXTURE_SIZE, maxSize, 0);
+
+   mEgl.eglMakeCurrent(mEglDisplay, EGL_NO_SURFACE, EGL_NO_SURFACE, EGL_NO_CONTEXT);
+   mEgl.eglDestroySurface(mEglDisplay, tmpSurface);
+
+   ... check maxSize vs frame size and bail if needed ...
+
+   mEglSurface = mEgl.eglCreateWindowSurface(mEglDisplay, mEglConfig, surfaceHolder, null);
+   ... error checking ...
+   mEgl.eglMakeCurrent(mEglDisplay, mEglSurface, mEglSurface, mEglContext);
+
+When the window-surface is created, it ends up with the same ptr address
+as the recently freed tmpSurface pbuffer surface.  Which after many
+levels of indirection, results in st_framebuffer_validate() ending up with
+the same/old framebuffer object, and in the end never calling the
+DRIimageLoaderExtension::getBuffers().  Then in droid_swap_buffers(), the
+dri2_surf is still the old pbuffer surface (with dri2_surf->buffer being
+NULL, obviously, so when wallpaper app calls eglSwapBuffers() nothing
+gets enqueued to the compositor).  Resulting in a black/blank background
+layer.
+
+Note that at the EGL layer, when the context is unbound, EGL drops it's
+references to the draw and read buffer as well.
+
+Signed-off-by: Rob Clark <robdclark@gmail.com>
+Tested-by: Robert Foss <robert.foss@collabora.com>
+Acked-by: Tapani Pälli <tapani.palli@intel.com>
+---
+ src/mesa/main/context.c | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/src/mesa/main/context.c b/src/mesa/main/context.c
+index c62575c..80bee16 100644
+--- a/src/mesa/main/context.c
++++ b/src/mesa/main/context.c
+@@ -1651,6 +1651,10 @@ _mesa_make_current( struct gl_context *newCtx,
+ 
+    if (!newCtx) {
+       _glapi_set_dispatch(NULL);  /* none current */
++      if (curCtx) {
++         _mesa_reference_framebuffer(&curCtx->WinSysDrawBuffer, NULL);
++         _mesa_reference_framebuffer(&curCtx->WinSysReadBuffer, NULL);
++      }
+    }
+    else {
+       _glapi_set_dispatch(newCtx->CurrentDispatch);
+-- 
+2.7.4
+
