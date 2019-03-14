@@ -7,8 +7,8 @@ PACKAGECONFIG[virglrenderer] = "--enable-virglrenderer,--disable-virglrenderer,v
 
 PACKAGECONFIG_class-native = "fdt alsa sdl sdl2 virglrenderer"
 PACKAGECONFIG_class-nativesdk = "fdt sdl sdl sdl2 virglrenderer"
-PACKAGECONFIG_class-native_remove = "virglrenderer glx sdl sdl2"
-PACKAGECONFIG_class-nativesdk_remove = "virglrender"
+PACKAGECONFIG_class-native_remove = "virglrenderer"
+PACKAGECONFIG_class-nativesdk_remove = "virglrenderer"
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${BPN}:"
 SRC_URI += "file://opengl-without-x11.patch"
