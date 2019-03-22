@@ -31,6 +31,7 @@ CHR68_PATCHES = "\
 "
 
 SRC_URI_append = " ${@oe.utils.conditional('PREFERRED_PROVIDER_virtual/webruntime', 'webruntime', '${CHR68_PATCHES}', '', d)}"
+SRC_URI_append = " file://0001-Allow-viewing-and-running-qml-apps-installed-in-dev-.patch"
 
 PACKAGES =+ "${PN}-tests"
 ALLOW_EMPTY_${PN}-tests = "1"

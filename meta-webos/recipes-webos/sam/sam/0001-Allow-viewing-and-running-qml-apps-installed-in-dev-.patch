@@ -1,0 +1,27 @@
+From d88bad2eb098cdb0a43366f8883a7fbfecd2474b Mon Sep 17 00:00:00 2001
+From: Heegoo Han <heegoo.han@lge.com>
+Date: Thu, 21 Mar 2019 19:11:01 +0900
+Subject: [PATCH] Allow viewing and running qml apps installed in dev directory
+
+original commit : https://github.com/webosose/sam/pull/1/commits/6506e9f44189084df3f45a21903a1311b6fb9b71
+---
+ src/core/package/application_description.cpp | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
+
+diff --git a/src/core/package/application_description.cpp b/src/core/package/application_description.cpp
+index 83fa08e..d44061f 100644
+--- a/src/core/package/application_description.cpp
++++ b/src/core/package/application_description.cpp
+@@ -120,8 +120,7 @@ bool ApplicationDescription::LoadJson(pbnjson::JValue& jdesc, const AppTypeByDir
+   else if ("native" == app_type) app_type_ = (privileged_jail) ? AppType::Native_Mvpd : AppType::Native;
+   else if ("native_builtin" == app_type) app_type_ = AppType::Native_Builtin;
+   else if ("native_appshell" == app_type) app_type_ = AppType::Native_AppShell;
+-  else if ("qml" == app_type &&
+-           (AppTypeByDir::System_BuiltIn == type_by_dir || AppTypeByDir::System_Updatable == type_by_dir)) {
++  else if ("qml" == app_type) {
+     if (SettingsImpl::instance().use_qml_booster_) app_type_ = AppType::Qml;
+     else app_type_ = AppType::Native_Qml;
+   }
+-- 
+2.17.1
+
