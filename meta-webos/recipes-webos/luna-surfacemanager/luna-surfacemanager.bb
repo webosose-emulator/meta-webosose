@@ -62,6 +62,8 @@ PACKAGECONFIG[cursor-theme] = "CONFIG+=cursor_theme,,"
 
 PACKAGECONFIG_webos = "compositor cursor-theme"
 
+SRC_URI_append = " file://0001-change-WEBOS_COMPOSITOR_PLATFORM-to-minimalegl.patch"
+
 PACKAGES =+ "${PN}-base"
 
 FILES_${PN}-base += " \

@@ -1,0 +1,34 @@
+From 9ccc9cc48e2b0b1078365d9459787fddce3e10b9 Mon Sep 17 00:00:00 2001
+From: Heegoo Han <heegoo.han@lge.com>
+Date: Thu, 21 Mar 2019 19:29:24 +0900
+Subject: [PATCH] change WEBOS_COMPOSITOR_PLATFORM to minimalegl
+
+---
+ base/startup/product.env.in | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/base/startup/product.env.in b/base/startup/product.env.in
+index fd7cf44..aa8e52c 100755
+--- a/base/startup/product.env.in
++++ b/base/startup/product.env.in
+@@ -31,7 +31,7 @@ export QT_QPA_EVDEV_KEYBOARD_PARAMETERS=keymap=@WEBOS_INSTALL_DATADIR@/webos-key
+ export WEBOS_COMPOSITOR_EXTENSIONS=webos-extension
+ 
+ # Platform plugin to be used
+-export WEBOS_COMPOSITOR_PLATFORM=eglfs
++export WEBOS_COMPOSITOR_PLATFORM=minimalegl
+ 
+ # Scale factor for High DPI
+ export QT_SCALE_FACTOR=1.0
+@@ -41,7 +41,7 @@ export QT_SCALE_FACTOR=1.0
+ DRM_DEVICES_EXPECTED=1
+ DRM_PROBE_RETRY=60
+ pmlog info "Probing DRM devices ..."
+-while true; do
++while false; do
+     c=0
+     for f in /sys/class/drm/card*-*; do
+         bn=$(basename $f)
+-- 
+2.17.1
+
