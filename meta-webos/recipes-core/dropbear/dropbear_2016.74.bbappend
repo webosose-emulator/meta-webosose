@@ -8,7 +8,7 @@ EXTENDPRAUTO_append = "webos6"
 
 # (In the emulator) our openssh is installed in /opt prefix, set the sftp path
 # this overrides default value set in oe-core's dropbear.inc
-CFLAGS_append_emulator = " -DSFTPSERVER_PATH=\\"/opt/openssh/lib/openssh/sftp-server\\""
+CFLAGS_append_emulator = " -DSFTPSERVER_PATH=\\"/opt/openssh/libexec/sftp-server\\""
 
 # move startup scripts in different packages
 PACKAGES =+ "${PN}-sysvinit"
@@ -33,4 +33,4 @@ do_install_append_emulator() {
 
 # Remove runtime dependency on separate dropbear-upstart package with Upstart 0.3 job file.
 RDEPENDS_${PN} = ""
-RDEPENDS_${PN}_emulator = "dhcp-client"
+RDEPENDS_${PN}_emulator = "dhcp-client openssh-sftp-server"
