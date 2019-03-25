@@ -1,0 +1,38 @@
+From ed0de97af9ce3cc51804acdbf7a9f228ca59135e Mon Sep 17 00:00:00 2001
+From: Heegoo Han <heegoo.han@lge.com>
+Date: Sat, 23 Mar 2019 16:09:27 +0900
+Subject: [PATCH] set kdsetmode to graphics mode
+
+---
+ src/plugins/platforms/minimalegl/qminimaleglintegration.cpp | 8 ++++++++
+ 1 file changed, 8 insertions(+)
+
+diff --git a/src/plugins/platforms/minimalegl/qminimaleglintegration.cpp b/src/plugins/platforms/minimalegl/qminimaleglintegration.cpp
+index bd1e28a105..ee99be5a8c 100644
+--- a/src/plugins/platforms/minimalegl/qminimaleglintegration.cpp
++++ b/src/plugins/platforms/minimalegl/qminimaleglintegration.cpp
+@@ -58,6 +58,9 @@
+ #include "qinputdevicescanner.h"
+ #include "qemulatorkeyboardmanager.h"
+ 
++#include <private/qcore_unix_p.h>
++#include <linux/kd.h>
++
+ QT_BEGIN_NAMESPACE
+ 
+ #ifdef Q_OS_WINRT
+@@ -100,6 +103,11 @@ QMinimalEglIntegration::~QMinimalEglIntegration()
+ 
+ void QMinimalEglIntegration::initialize()
+ {
++    int mTty = -1;
++
++    mTty = open("/dev/tty1", O_RDWR);
++    if (mTty != -1)
++        ioctl(mTty, KDSETMODE, KD_GRAPHICS);
+     createInputHandlers();
+ }
+ 
+-- 
+2.14.1
+

@@ -129,5 +129,6 @@ inherit webos_machine_impl_dep
 DEPENDS_append_emulator = " nyx-lib"
 SRC_URI_append_emulator = " file://0098-Emulator-NYX-integration-with-eglfs-plugin.patch"
 SRC_URI_append_emulator = " file://0901-change-minimalegl-for-virtualbox-qpa.patch"
+SRC_URI_append_emulator = " file://0902-set-kdsetmode-to-graphics-mode.patch"
 PACKAGECONFIG_append_emulator = " kms eglfs"
 EXTRA_QMAKEVARS_PRE_append_emulator = " INCLUDEPATH+=${STAGING_INCDIR}/drm EGLFS_EMULATOR_SUPPORT=QEMU"
