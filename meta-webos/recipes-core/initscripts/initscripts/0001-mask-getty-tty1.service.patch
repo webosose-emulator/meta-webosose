@@ -1,0 +1,34 @@
+From fdc8b21a2af08fb9fc860cf1a57f7a7cb01f7f5f Mon Sep 17 00:00:00 2001
+From: Heegoo Han <heegoo.han@lge.com>
+Date: Tue, 26 Mar 2019 11:16:08 +0900
+Subject: [PATCH] mask getty@tty1.service
+
+---
+ CMakeLists.txt                                   | 1 +
+ files/systemd/services/common/getty@tty1.service | 1 +
+ 2 files changed, 2 insertions(+)
+ create mode 120000 files/systemd/services/common/getty@tty1.service
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 01c9ac8..217dcfd 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -88,6 +88,7 @@ set(systemd_units
+     files/systemd/services/common/devmode.service
+     files/systemd/services/common/dropbear.service
+     files/systemd/services/common/dropbear.socket
++    files/systemd/services/common/getty@tty1.service
+     files/systemd/services/common/ecryptfs.service
+     files/systemd/services/common/event-monitor.service
+     files/systemd/services/common/jail.service
+diff --git a/files/systemd/services/common/getty@tty1.service b/files/systemd/services/common/getty@tty1.service
+new file mode 120000
+index 0000000..dc1dc0c
+--- /dev/null
++++ b/files/systemd/services/common/getty@tty1.service
+@@ -0,0 +1 @@
++/dev/null
+\ No newline at end of file
+-- 
+2.17.1
+

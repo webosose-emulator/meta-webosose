@@ -27,8 +27,11 @@ inherit webos_public_repo
 
 SRC_URI = "${WEBOSOSE_GIT_REPO_COMPLETE}"
 S = "${WORKDIR}/git"
+FILESEXTRAPATHS_prepend := "${THISDIR}/initscripts:"
 
 WAM_SYSTEMD_SCRIPT_DEST = "${D}${sysconfdir}/systemd/system/scripts/webapp-mgr.sh"
+
+SRC_URI_append = " file://0001-mask-getty-tty1.service.patch"
 
 do_install_append_webos() {
     if [ -f ${WAM_SYSTEMD_SCRIPT_DEST} ] && [ "${PREFERRED_PROVIDER_virtual/webruntime}" = "webruntime" ]; then
