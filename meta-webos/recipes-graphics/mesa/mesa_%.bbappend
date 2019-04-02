@@ -8,8 +8,8 @@ FILESEXTRAPATHS_prepend := "${THISDIR}/${BPN}:"
 PACKAGECONFIG_qemuall = "opengl gbm egl gles dri wayland gallium"
 
 # Add virgl gallium driver
-GALLIUMDRIVERS_qemuall = "virgl"
-GALLIUMDRIVERS_LLVM_qemuall = "virgl"
+GALLIUMDRIVERS_qemuall = "svga"
+GALLIUMDRIVERS_LLVM_qemuall = "svga"
 DRIDRIVERS_qemuall = "swrast"
 
 # Enable wayland even without wayland in DISTRO_FEATURES
