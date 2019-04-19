@@ -1,4 +1,4 @@
-# Copyright (c) 2014-2018 LG Electronics, Inc.
+# Copyright (c) 2014-2019 LG Electronics, Inc.
 
 SUMMARY = "Systemd service files for system services"
 AUTHOR = "Sangwoo Kang <sangwoo82.kang@lge.com>"
@@ -15,8 +15,8 @@ PROVIDES = "initscripts"
 # The dependency needs to be deleted after deleting fake initctl.
 DEPENDS = "systemd"
 
-WEBOS_VERSION = "3.0.0-14_2946b1a274da2278e8baf49bdee8388da688efad"
-PR = "r10"
+WEBOS_VERSION = "3.0.0-18_b2c3380a1c761a699fd3a626d6c0c56833dbe40a"
+PR = "r11"
 
 inherit webos_component
 inherit webos_enhanced_submissions
@@ -27,26 +27,3 @@ inherit webos_public_repo
 
 SRC_URI = "${WEBOSOSE_GIT_REPO_COMPLETE}"
 S = "${WORKDIR}/git"
-
-WAM_SYSTEMD_SCRIPT_DEST = "${D}${sysconfdir}/systemd/system/scripts/webapp-mgr.sh"
-
-do_install_append_webos() {
-    if [ -f ${WAM_SYSTEMD_SCRIPT_DEST} ] && [ "${PREFERRED_PROVIDER_virtual/webruntime}" = "webruntime" ]; then
-        # TODO: Move these to webapp-mgr.sh.in in source code
-        sed -i '/export ENABLE_LAUNCH_OPTIMIZATION=1/a\\n    # setup limit on max gpu memory usage\n    export MAX_GPU_MEM_LIMIT=60' ${WAM_SYSTEMD_SCRIPT_DEST}
-        sed -i '/export ENABLE_LAUNCH_OPTIMIZATION=1/a\\n    # setup 2 Mb limitation mse audio buffer size\n    export MSE_AUDIO_BUFFER_SIZE_LIMIT=2097152' ${WAM_SYSTEMD_SCRIPT_DEST}
-        sed -i '/export ENABLE_LAUNCH_OPTIMIZATION=1/a\\n    # setup 15 Mb limitation mse video buffer size\n    export MSE_VIDEO_BUFFER_SIZE_LIMIT=15728640' ${WAM_SYSTEMD_SCRIPT_DEST}
-        sed -i '/export ENABLE_LAUNCH_OPTIMIZATION=1/a\\n    # # Enable blink features\n    export ENABLE_BLINK_FEATURES=AudioFocusExtension,MediaSourceIsSupportedExtension,MediaTimelineOffset,UMSExtension' ${WAM_SYSTEMD_SCRIPT_DEST}
-        sed -i '/--enable-aggressive-release-policy \\/a\        --autoplay-policy=no-user-gesture-required \\' ${WAM_SYSTEMD_SCRIPT_DEST}
-        sed -i '/--enable-aggressive-release-policy \\/a\        --enable-neva-ime \\' ${WAM_SYSTEMD_SCRIPT_DEST}
-        sed -i '/--enable-aggressive-release-policy \\/a\        --enable-blink-features=\$ENABLE_BLINK_FEATURES \\' ${WAM_SYSTEMD_SCRIPT_DEST}
-        sed -i '/--enable-aggressive-release-policy \\/a\        --max-timeupdate-event-frequency=150 \\' ${WAM_SYSTEMD_SCRIPT_DEST}
-        sed -i '/--enable-aggressive-release-policy \\/a\        --mse-audio-buffer-size-limit=\$MSE_AUDIO_BUFFER_SIZE_LIMIT \\' ${WAM_SYSTEMD_SCRIPT_DEST}
-        sed -i '/--enable-aggressive-release-policy \\/a\        --mse-video-buffer-size-limit=\$MSE_VIDEO_BUFFER_SIZE_LIMIT \\' ${WAM_SYSTEMD_SCRIPT_DEST}
-        sed -i '/--enable-aggressive-release-policy \\/a\        --no-sandbox \\' ${WAM_SYSTEMD_SCRIPT_DEST}
-        sed -i '/--enable-aggressive-release-policy \\/a\        --fps-counter-layout=tl \\' ${WAM_SYSTEMD_SCRIPT_DEST}
-        sed -i '/--enable-aggressive-release-policy \\/a\        --force-gpu-mem-available-mb=\$MAX_GPU_MEM_LIMIT \\' ${WAM_SYSTEMD_SCRIPT_DEST}
-        sed -i -e "s/WATCHDOG_RENDER/WATCHDOG_RENDERER/gI" -e "s/watchdog-render/watchdog-renderer/gI" ${WAM_SYSTEMD_SCRIPT_DEST}
-        sed -i -e "s/skia-font-cache-size-mb/skia-font-cache-limit-mb/gI" -e "s/skia-image-cache-size-mb/skia-resource-cache-limit-mb/gI" ${WAM_SYSTEMD_SCRIPT_DEST}
-    fi
-}

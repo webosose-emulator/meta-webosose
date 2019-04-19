@@ -1,4 +1,4 @@
-# Copyright (c) 2014-2018 LG Electronics, Inc.
+# Copyright (c) 2014-2019 LG Electronics, Inc.
 
 SUMMARY = "webOS Bluetooth management service"
 AUTHOR = "Sameer Mulla <sameer.mulla@lge.com>"
@@ -45,7 +45,7 @@ WEBOS_BLUETOOTH_ENABLED_SERVICE_CLASSES = "GATT FTP OPP A2DP SPP HFP AVRCP PAN A
 # emulator), which means that the pairing should happen without user intervention.
 WEBOS_BLUETOOTH_PAIRING_IO_CAPABILITY ??= "NoInputNoOutput"
 
-WEBOS_VERSION = "1.0.0-16_bde63568dc177aab13e6bfb37323856caaf4a29f"
+WEBOS_VERSION = "1.0.0-18_e00d84c7f1e16aade55e45954a0c69bf7f7f234a"
 PR = "r0"
 
 inherit webos_component

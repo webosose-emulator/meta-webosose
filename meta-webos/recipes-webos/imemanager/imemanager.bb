@@ -1,4 +1,4 @@
-# Copyright (c) 2017-2018 LG Electronics, Inc.
+# Copyright (c) 2017-2019 LG Electronics, Inc.
 
 SUMMARY = "Maliit Input Method Plugins"
 DESCRIPTION = "Mallit-based virtual keyboard and input method engine for open webOS"
@@ -8,10 +8,10 @@ LICENSE = "Apache-2.0"
 LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/Apache-2.0;md5=89aea4e17d99a7cacdbeed46a0096b10"
 
 DEPENDS = "qtbase luna-service2 luna-prefs qt-features-webos qtdeclarative maliit-framework-webos"
-RDEPENDS_${PN} += "libhangul qml-webos-bridge"
+RDEPENDS_${PN} += "libhangul sunpinyin pyzy qml-webos-bridge"
 
-WEBOS_VERSION = "1.0.0-4_efdc3fe58df8e17ed0972aa123a7d7d283b12ed6"
-PR = "r0"
+WEBOS_VERSION = "1.0.0-6_7eb9b71a92bb9caad027245cb9a3a83afa4f70a0"
+PR = "r1"
 
 inherit webos_component
 inherit webos_enhanced_submissions
@@ -26,6 +26,7 @@ S = "${WORKDIR}/git"
 OE_QMAKE_PATH_HEADERS = "${OE_QMAKE_PATH_QT_HEADERS}"
 
 EXTRA_QMAKEVARS_PRE += "CONFIG+=disable-tests"
+EXTRA_QMAKEVARS_PRE += " CONFIG+=enable-maliit-plugin-chinese"
 
 EXTRA_QMAKEVARS_PRE += "LIBDIR=${STAGING_LIBDIR}"
 EXTRA_QMAKEVARS_PRE += "WEBOS_INSTALL_BINS=${sbindir}"

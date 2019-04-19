@@ -1,4 +1,4 @@
-# Copyright (c) 2012-2018 LG Electronics, Inc.
+# Copyright (c) 2012-2019 LG Electronics, Inc.
 
 SUMMARY = "Sleep scheduling policy daemon"
 AUTHOR = "Sapna Todwal <sapna.todwal@lge.com>"
@@ -8,7 +8,7 @@ LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/Apache-2.0;md5=89aea4e17d99a7ca
 
 DEPENDS = "nyx-lib luna-service2 json-c libxml2 sqlite3 glib-2.0"
 
-WEBOS_VERSION = "2.0.0-2_3de00ad0e015350a0b608ec9904e251a5df1c3fc"
+WEBOS_VERSION = "2.0.0-5_4d9eb832b4b2ee57b40f3a68a2121fa999767493"
 PR = "r7"
 
 inherit webos_component
