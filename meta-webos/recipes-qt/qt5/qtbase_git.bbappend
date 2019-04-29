@@ -111,7 +111,7 @@ SRC_URI_append = " \
     file://0034-Avoid-loading-comments-from-JPEG-and-PNG-files.patch \
 "
 
-SRC_URI_append_hardware = " \
+SRC_URI_append = " \
     file://0035-eglfs-Support-multiple-device-integration.patch \
     file://0036-eglfs-Support-multiple-display.patch \
     file://0037-eglfs-Associate-keyboard-device-with-window.patch \
